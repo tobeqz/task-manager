@@ -1,4 +1,4 @@
-use std::{collections::HashMap, marker::PhantomData};
+use std::{collections::HashMap};
 
 use axum::{
     extract::{Path, State},
@@ -8,7 +8,7 @@ use axum::{
 use chrono::{DateTime, Utc};
 use color_eyre::Result;
 use serde::{Deserialize, Serialize};
-use surrealdb::{engine::remote::ws::Client, Surreal, opt::PatchOp};
+use surrealdb::{opt::PatchOp};
 
 use crate::{db_types, ServerState};
 

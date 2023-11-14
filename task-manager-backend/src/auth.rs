@@ -1,20 +1,20 @@
 use axum::{
     extract::State,
-    http::{Request, StatusCode},
+    http::{Request, StatusCode, Method},
     middleware::Next,
     response::Response,
-    Json, body::{BoxBody, HttpBody, Body},
+    Json, body::{Body},
 };
 use cookie::{Cookie, CookieBuilder};
 
-use crate::{SecretKey, ServerState};
+use crate::{ServerState};
 
 pub async fn auth_middleware<B>(
     request: Request<B>,
     next: Next<B>,
 ) -> Result<Response, StatusCode> {
     let path = request.uri().path();
-    if path == "/login" || path == "/login/" {
+    if path == "/login" || path == "/login/" || request.method() == Method::OPTIONS {
         return Ok(next.run(request).await);
     }
 

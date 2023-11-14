@@ -11,6 +11,7 @@ use dotenvy;
 mod task;
 mod db_types;
 mod auth;
+mod cors;
 
 #[derive(Clone)]
 pub struct SecretKey(String);
@@ -43,6 +44,7 @@ async fn main() -> Result<()> {
         .route("/task/:id/due", patch(task::update_due_date))
         .route("/task/:id/done", patch(task::update_done))
         .layer(from_fn(auth::auth_middleware))
+        .layer(from_fn(cors::cors_middleware))
         .with_state(state);
 
     println!("Hello, world!");
